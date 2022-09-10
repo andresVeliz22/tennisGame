@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tennis</title>
+</head>
+<body>
+    
+    <canvas id="myCanvas" width="800" height="600" style="border: 1px solid black"></canvas>
+
+    <script>
+
+        let canvas, ctx
+        let ballX = 75, ballY = 75;
+        let ballSpeedX = 4, ballSpeedY = 2;
+
+        window.onload = function() {
+
+            canvas = document.getElementById("myCanvas");
+            ctx = canvas.getContext("2d");
+
+            let framesPerSecond = 30;
+            setInterval(function() {
+                drawEverything();
+                moveEverything();    
+            }, 1000/framesPerSecond)   
+        }
+
+        function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
+            ctx.beginPath();
+            ctx.fillStyle = fillColor;
+            ctx.fillRect(topLeftX, topLeftY, boxWidth, boxHeight);
+            ctx.fill();
+        }
+
+        function colorCircle(centerX, centerY, radius, startingPoint, endingPoint, fillColor) {
+            ctx.beginPath();
+            ctx.fillStyle = fillColor;
+            ctx.arc(centerX, centerY, radius, startingPoint, endingPoint);
+            ctx.fill();
+        }
+
+
+        function drawEverything() {
+            // draw black canvas
+            colorRect(0, 0, canvas.width, canvas.height, 'black');
+
+            //draw a left paddle
+            colorRect(0, 250, 10, 100, 'white');
+            
+            //draw a white
+            colorCircle(ballX, ballY, 10, 0, Math.PI * 2, 'white');
+        }
+
+        
+        function moveEverything() {
+            ballX += ballSpeedX;
+            ballY += ballSpeedY;
+
+            if (ballX > canvas.width) {
+                ballSpeedX *= -1;
+            }
+
+            if (ballX < 0) {
+                ballSpeedX *= -1;
+            }
+
+            if (ballY > canvas.height) {
+                ballSpeedY *= -1;
+            }
+
+            if (ballY < 0) {
+       
+                ballSpeedY *= -1;
+            }
+        }
+    </script>
+</body>
+</html>
+    
+
+    
